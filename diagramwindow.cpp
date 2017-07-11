@@ -9,6 +9,8 @@
 #include <QDebug>
 #include <QFile>
 #include <QFileDialog>
+#include <QApplication>
+#include <QWidget>
 
 #include "aqp/aqp.hpp"
 #include "aqp/alt_key.hpp"
@@ -42,31 +44,31 @@ const int OffsetIncrement = 5;
 ******************************************************************/
 DiagramWindow::DiagramWindow()
 {
-    printer = new QPrinter(QPrinter::HighResolution);
-    scene = new QGraphicsScene(0, 0, 1000, 1000);
+    printer = new QPrinter(QPrinter::HighResolution);//画笔
+    scene = new QGraphicsScene(0, 0, 1000, 1000);//画布区域
     //scene = new QGraphicsScene;
 
-    view = new QGraphicsView;
+    view = new QGraphicsView;//图形视图
     view->setScene(scene);
-    view->setDragMode(QGraphicsView::RubberBandDrag);
+    view->setDragMode(QGraphicsView::RubberBandDrag);//默认动作
     view->setRenderHints(QPainter::Antialiasing
                          | QPainter::TextAntialiasing);
-    view->setContextMenuPolicy(Qt::ActionsContextMenu);
-    setCentralWidget(view);
+    view->setContextMenuPolicy(Qt::ActionsContextMenu);//显示文本菜单
+    setCentralWidget(view);//设置中心？默认？部件
 
     minZ = 0;
     maxZ = 0;
     seqNumber = 0;
     varNodeNum = 0;
 
-    createActions();
-    createMenus();
-    createToolBars();
+    createActions();//创建
+    createMenus();//创建菜单
+    createToolBars();//创建工具栏
 
     connect(scene, SIGNAL(selectionChanged()),
-            this, SLOT(updateActions()));
+            this, SLOT(updateActions()));//连接选择改变信号和更新槽
 
-    setWindowTitle(tr("Diagram"));
+    setWindowTitle(tr("Diagram"));//设置窗口名称
     updateActions();
 }
 
@@ -120,13 +122,13 @@ void DiagramWindow::fileNew()
 
 /*******************************************************************
  * Function name: okToClearData()
- * Description: This function determins whether the data on the window
+ * Description: This function determines whether the data on the window
  *     can be cleared.
  * Callee: isWindowModified(), AQP::okToClearData()
  * Inputs:
  * Outputs: bool
 ******************************************************************/
-bool DiagramWindow::okToClearData()
+bool DiagramWindow::okToClearData()  //tr？？
 {
     if (isWindowModified())
         return AQP::okToClearData(&DiagramWindow::fileSave, this,
@@ -146,7 +148,7 @@ void DiagramWindow::selectAllItems()
 {
     scene->clearSelection();
     foreach (QGraphicsItem *item, scene->items())
-        item->setSelected(true);
+      item->setSelected(true);
 }
 
 /*******************************************************************
@@ -163,7 +165,7 @@ void DiagramWindow::fileOpen()
         return;
     const QString &filename = QFileDialog::getOpenFileName(this,
             tr("%1 - Open").arg(QApplication::applicationName()),
-            ".", tr("Page Designer (*.pd)"));
+            ".", tr("Page Designer (*.pd)"));  //？？？？？
     if (filename.isEmpty())
         return;
     setWindowFilePath(filename);
@@ -1118,9 +1120,117 @@ void DiagramWindow::properties()
 }
 
 /*******************************************************************
+ * Function name: startCompile()
+ * Description:
+ * Callee:
+ * Inputs:
+ * Outputs:
+******************************************************************/
+void DiagramWindow::startCompile()
+{
+
+}
+
+/*******************************************************************
+ * Function name: convertCode()
+ * Description:
+ * Callee:
+ * Inputs:
+ * Outputs:
+******************************************************************/
+void DiagramWindow::convertCode()
+{
+
+}
+/*******************************************************************
+ * Function name: toolBar()
+ * Description:
+ * Callee:
+ * Inputs:
+ * Outputs:
+******************************************************************/
+void DiagramWindow::toolBar()
+{
+
+}
+
+/*******************************************************************
+ * Function name: controlsToolBar()
+ * Description:
+ * Callee:
+ * Inputs:
+ * Outputs:
+******************************************************************/
+void DiagramWindow::controlsToolBar()
+{
+
+}
+
+/*******************************************************************
+ * Function name: statesOfControlsToolBar()
+ * Description:
+ * Callee:
+ * Inputs:
+ * Outputs:
+******************************************************************/
+void DiagramWindow::statesOfControlsToolBar()
+{
+
+}
+
+/*******************************************************************
+ * Function name: canvas()
+ * Description:
+ * Callee:
+ * Inputs:
+ * Outputs:
+******************************************************************/
+void DiagramWindow::canvas()
+{
+
+}
+
+/*******************************************************************
+ * Function name: openDocumentation()
+ * Description:
+ * Callee:
+ * Inputs:
+ * Outputs:
+******************************************************************/
+void DiagramWindow::openDocumentation()
+{
+ //QApplication a(argc, argv);
+ //connect(this, SIGNAL(clicked()), this, SLOT(FileWidget()));
+   FileWidget win;
+    win.show();
+
+ //openBtn = new QPushButton("OPEN", this);
+ //connect(openBtn, SIGNAL(clicked()), this, SLOT(slotOpenFileDialog()));
+ //tipsLabel = new QLabel("help", this);
+
+}
+
+
+
+
+/*******************************************************************
+ * Function name: systemInformation()
+ * Description:
+ * Callee:
+ * Inputs:
+ * Outputs:
+******************************************************************/
+void DiagramWindow::systemInformation()
+{
+    
+}
+
+
+
+/*******************************************************************
  * Function name: updateActions()
  * Description: This function changes the state of actions according
- *     to the selected items.
+ *              to the selected items.
  * Callee:
  * Inputs:
  * Outputs:
@@ -1145,7 +1255,7 @@ void DiagramWindow::updateActions()
 
     foreach (QAction *action, editMenu->actions()) {
         if (action->isEnabled())
-            view->addAction(action);
+        view->addAction(action);
     }
 }
 
@@ -1274,6 +1384,33 @@ void DiagramWindow::createActions()
     propertiesAction = new QAction(tr("P&roperties..."), this);
     connect(propertiesAction, SIGNAL(triggered()),
             this, SLOT(properties()));
+
+    startCompileAction = new QAction(tr("&Start compile"),this);
+    connect(startCompileAction,SIGNAL(triggered()),this,SLOT(startCompile()));
+
+    convertCodeAction = new QAction(tr("&Convert code"),this);
+    connect(convertCodeAction,SIGNAL(triggered()),this,SLOT(convertCode()));
+
+    toolBarAction = new QAction(tr("&Tool bar"),this);
+    connect(toolBarAction,SIGNAL(triggered()),this,SLOT(toolBar()));
+
+    controlsToolBarAction = new QAction(tr("&Controls tool bar"),this);
+    connect(controlsToolBarAction,SIGNAL(triggered()),this,SLOT(controlsToolBar()));
+
+    statesOfControlsToolBarAction = new QAction(tr("&States of controls tool bar"),this);
+    connect(statesOfControlsToolBarAction,SIGNAL(triggered()),this,SLOT(statesOfControlsToolBar()));
+
+    canvasAction = new QAction(tr("Canvas"),this);
+    connect(canvasAction,SIGNAL(triggered()),this,SLOT(canvas()));
+
+    openDocumentationAction = new QAction(tr("&Open documentation"),this);
+    connect(openDocumentationAction,SIGNAL(triggered()),this,SLOT(openDocumentation()));
+
+    systemInformationAction = new QAction(tr("&System information"),this);
+    connect(systemInformationAction,SIGNAL(triggered()),this,SLOT(systemInformation()));
+
+
+
 }
 
 /*******************************************************************
@@ -1299,6 +1436,21 @@ void DiagramWindow::createMenus()
     editMenu = menuBar()->addMenu(tr("&Edit"));
     editMenu->addAction(addLinkAction);
 
+    compileMenu = menuBar()->addMenu(tr("&Compile"));
+    compileMenu->addAction(startCompileAction);
+    compileMenu->addAction(convertCodeAction);
+
+    windowMenu = menuBar()->addMenu(tr("&Window"));
+    windowMenu->addAction(toolBarAction);
+    windowMenu->addAction(controlsToolBarAction);
+    windowMenu->addAction(statesOfControlsToolBarAction);
+    windowMenu->addAction(canvasAction);
+    windowMenu->addAction(propertiesAction);
+
+    helpMenu = menuBar()->addMenu(tr("&Help"));
+    helpMenu->addAction(openDocumentationAction);
+    helpMenu->addAction(systemInformationAction);
+
     QMenu *translationMenu = new QMenu(tr("translation"),this);
     foreach(QAction *action,QList<QAction*>()
             <<addRiseNodeAction<<addFallNodeAction
@@ -1321,7 +1473,7 @@ void DiagramWindow::createMenus()
     editMenu->addAction(addVardefNodeAction);
     editMenu->addAction(addComputeNodeAction);
     editMenu->addAction(addIoNodeAction);
-    editMenu->addAction(addRecAction);
+    //editMenu->addAction(addRecAction);
     editMenu->addSeparator();
 
     editMenu->addAction(deleteAction);
@@ -1333,7 +1485,7 @@ void DiagramWindow::createMenus()
     editMenu->addAction(bringToFrontAction);
     editMenu->addAction(sendToBackAction);
     editMenu->addSeparator();
-    editMenu->addAction(propertiesAction);
+    //editMenu->addAction(propertiesAction);
 }
 
 /*******************************************************************
