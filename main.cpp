@@ -11,7 +11,10 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+
     DiagramWindow view;
     view.show();
+    FileWidget win;
+    win.show();
     return app.exec();
 }
