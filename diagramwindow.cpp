@@ -1202,7 +1202,7 @@ void DiagramWindow::openDocumentation()
  //QApplication a(argc, argv);
  //connect(this, SIGNAL(clicked()), this, SLOT(FileWidget()));
    FileWidget win;
-    win.show();
+   win.show();
 
  //openBtn = new QPushButton("OPEN", this);
  //connect(openBtn, SIGNAL(clicked()), this, SLOT(slotOpenFileDialog()));

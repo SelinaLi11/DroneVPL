@@ -14,7 +14,6 @@ int main(int argc, char *argv[])
 
     DiagramWindow view;
     view.show();
-    FileWidget win;
-    win.show();
+
     return app.exec();
 }

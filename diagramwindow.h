@@ -3,6 +3,16 @@
 
 #include <QMainWindow>
 #include <QPair>
+//
+#include<qapplication.h>
+#include<qwidget.h>
+#include<qfile.h>
+#include<qtextstream.h>
+#include<qstring.h>
+//#include<qmultilineedit.h>
+#include "openDocumentation.h"
+
+
 
 class QAction;
 class QGraphicsItem;
@@ -104,6 +114,16 @@ private:
     void addTranslation(TranslationNode* node);//addTranslationNode()的帮助函数
     void addSome(SomeNode* node);//addSomeNode()的帮助函数
 
+    void startCompile();
+    void convertCode();
+    void toolBar();
+    void controlsToolBar();
+    void statesOfControlsToolBar();
+    void canvas();
+    void openDocumentation();
+    void systemInformation();
+
+
     Link *selectedLink() const;
     Yuan *selectedYuan() const;
     YuanPair selectedYuanPair() const;
@@ -111,6 +131,10 @@ private:
 
     QMenu *fileMenu;
     QMenu *editMenu;
+    QMenu *compileMenu;
+    QMenu *windowMenu;
+    QMenu *helpMenu;
+
     QToolBar *editToolBar;
     QToolBar *actionToolBar;
     QAction *fileNewAction;
@@ -153,6 +177,16 @@ private:
     QAction *bringToFrontAction;
     QAction *sendToBackAction;
     QAction *propertiesAction;
+
+    QAction *startCompileAction;
+    QAction *convertCodeAction;
+    QAction *toolBarAction;
+    QAction *controlsToolBarAction;
+    QAction *statesOfControlsToolBarAction;
+    QAction *canvasAction;
+    QAction *openDocumentationAction;
+    QAction *systemInformationAction;
+
 
     QPrinter *printer;
     QGraphicsScene *scene;
